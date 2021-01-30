@@ -1,3 +1,6 @@
+const pastry = require('./pastry')
+const books = require('./books')
+
 module.exports = {
   users: [
     {
@@ -13,4 +16,6 @@ module.exports = {
       }
     }
   ],
+  pastry,
+  books
 }
