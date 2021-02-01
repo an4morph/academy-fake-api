@@ -45,7 +45,17 @@ const createNew = (req, res) => {
   res.send(newItem)
 }
 
+const deleteItem = (req, res) => {
+  const { id } = req.params
+  const item = db.get('pastry').find({ id }).value()
+  if (!item) return error(res, 404, 'cannot find pastry with this id')
+
+  db.get('pastry').remove({ id }).write()
+  res.send('successful delete')
+}
+
 module.exports = {
   getAll,
   createNew,
+  deleteItem
 }

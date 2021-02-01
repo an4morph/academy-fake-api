@@ -19,6 +19,7 @@ app.post('/signin', auth.signin)
 
 app.get('/pastry', pastry.getAll)
 app.post('/pastry/create', pastry.createNew)
+app.delete('/pastry/delete/:id', pastry.deleteItem)
 
 app.get('/books', books.getAll)
 app.post('/books/create', books.createNew)
