@@ -17,5 +17,6 @@ module.exports = {
     }
   ],
   pastry,
-  books
+  books: books.main,
+  books_expanded: books.expanded,
 }

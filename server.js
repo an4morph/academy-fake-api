@@ -23,6 +23,7 @@ app.put('/pastry/update/:id', pastry.updateItem)
 app.delete('/pastry/delete/:id', pastry.deleteItem)
 
 app.get('/books', books.getAll)
+app.get('/books/detail/:id', books.getItem)
 app.post('/books/create', books.createNew)
 app.put('/books/update/:id', books.updateItem)
 app.delete('/books/delete/:id', books.deleteItem)
