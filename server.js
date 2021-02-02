@@ -18,6 +18,7 @@ app.post('/login', auth.login)
 app.post('/signin', auth.signin)
 
 app.get('/pastry', pastry.getAll)
+app.get('/pastry/detail/:id', pastry.getItem)
 app.post('/pastry/create', pastry.createNew)
 app.put('/pastry/update/:id', pastry.updateItem)
 app.delete('/pastry/delete/:id', pastry.deleteItem)
