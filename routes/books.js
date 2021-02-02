@@ -16,6 +16,14 @@ const getItem = (req, res) => {
 
 const createNew = (req, res) => {
   const { name, author, isFavorite, publishYear, publishHouse, pagesNumber, genres, originalLanguage } = req.body
+  const permisbleKeys = 'name, author, isFavorite, publishYear, publishHouse, pagesNumber, genres, originalLanguage'.split(', ')
+
+  const keys = Object.keys(req.body)
+  const invalid = keys.filter(k => !permisbleKeys.includes(k))
+  if (invalid.length) {
+    return error(res, 400, `${invalid.join(', ')} is not valid keys`)
+  }
+
   if (!name) return error(res, 400, '`name` attribute is required')
   if (!author) return error(res, 400, '`author` attribute is required')
 
@@ -33,6 +41,8 @@ const createNew = (req, res) => {
     author,
     id: shortid.generate(),
     isFavorite: isFavorite || false,
+  }
+  const expanded = {
     publishYear: publishYear || null,
     publishHouse: publishHouse || null, 
     pagesNumber: pagesNumber || 0,
@@ -41,8 +51,8 @@ const createNew = (req, res) => {
   }
 
   db.get('books').push(newBook).write()
-  db.get('books_expanded').push(newBook).write()
-  res.send(newBook)
+  db.get('books_expanded').push({ ...newBook, ...expanded }).write()
+  res.send({ ...newBook, ...expanded })
 }
 
 const updateItem = (req, res) => {
@@ -69,23 +79,33 @@ const updateItem = (req, res) => {
   if (genres && !Array.isArray(genres)) return error(res, 400, 'genres attribute should be type `array`')
   if (originalLanguage && typeof originalLanguage !== 'string') return error(res, 400, 'originalLanguage attribute should be type `string`')
 
-  const updatedBook = { ...book, ...req.body }
+  const updatedItem = { ...book_expanded, ...req.body }
+  const not_expanded = Object.assign({}, updatedItem)
+  delete not_expanded['publishYear']
+  delete not_expanded['publishHouse']
+  delete not_expanded['pagesNumber']
+  delete not_expanded['genres']
+  delete not_expanded['originalLanguage']
 
-  db.get('books').find({ id }).assign(updatedBook).write()
-  db.get('books_expanded').find({ id }).assign(updatedBook).write()
+  db.get('books').find({ id }).assign(not_expanded).write()
+  db.get('books_expanded').find({ id }).assign(updatedItem).write()
 
-  res.send(updatedBook)
+  res.send(updatedItem)
 }
 
 const deleteItem = (req, res) => {
   const { id } = req.params
-  const book = db.get('books').find({ id }).value()
-  const book_expanded = db.get('books_expanded').find({ id }).value()
-  if (!book || !book_expanded) return error(res, 404, 'cannot find book with this id')
+  const item = db.get('books').find({ id }).value()
+  const item_expanded = db.get('books_expanded').find({ id }).value()
+  if (!item || !item_expanded) return error(res, 404, 'cannot find books with this id')
 
   db.get('books').remove({ id }).write()
   db.get('books_expanded').remove({ id }).write()
-  res.send('successful delete')
+  
+  res.send({
+    id: item.id,
+    success: true
+  })
 }
 
 module.exports = {

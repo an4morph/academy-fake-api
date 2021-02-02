@@ -96,7 +96,6 @@ const updateItem = (req, res) => {
   const not_expanded = Object.assign({}, updatedItem)
   delete not_expanded['hasDelivery']
   delete not_expanded['address']
-  console.log('not_expanded', not_expanded)
 
   db.get('pastry').find({ id }).assign(not_expanded).write()
   db.get('pastry_expanded').find({ id }).assign(updatedItem).write()
@@ -107,10 +106,16 @@ const updateItem = (req, res) => {
 const deleteItem = (req, res) => {
   const { id } = req.params
   const item = db.get('pastry').find({ id }).value()
-  if (!item) return error(res, 404, 'cannot find pastry with this id')
+  const item_expanded = db.get('pastry_expanded').find({ id }).value()
+  if (!item || !item_expanded) return error(res, 404, 'cannot find pastry with this id')
 
   db.get('pastry').remove({ id }).write()
-  res.send('successful delete')
+  db.get('pastry_expanded').remove({ id }).write()
+  
+  res.send({
+    id: item.id,
+    success: true
+  })
 }
 
 module.exports = {
