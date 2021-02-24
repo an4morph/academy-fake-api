@@ -12,47 +12,29 @@ npm start
 
 ## Доступные CRUD приложения и роуты
   
->**Памятка обозначений**  
-_required_ - обязательное поле  
-_optional_ - не обязательное поле
+Книги `/books`
+<br/>
+Кондитерская `/pastry`
+<br/>
 
-#### Книги
-**Для получения списка всех книг**  
-`GET /books`  
-В ответе вы получите массив из объектов такой структуры: 
-```
-{
-  id: string, // required
-  name: string, // required
-  author: string, // required
-  isFavorite: boolean, // optional
-}
-```
+#### Как пользоваться данным АПИ
+Вместо слова `resource` вставте нужный вам url. Например, если вам нужны книги используйте `/books`    
+<br/>
+**Для получения списка всех элементов**  
+`GET /resource`
+
+**Для получения одной книги по id**  
+`GET /resource/detail/:id`
+
 **Для создания новой книги**  
-`POST /books/create`   
-Схема объекта для отправки в body запроса
-```
-{
-  name: string, // required
-  author: string, // required
-  isFavorite: boolean,  // optional
-}
-```
+`POST /resource/create`
 id объекта сгерерируется на сервере  
 
 **Для редактирования книги**  
-`PUT /books/update/:id`  
-Схема объекта для отправки в body запроса
-```
-{
-  name: string, // optional
-  author: string, // optional
-  isFavorite: boolean,  // optional
-}
-```
+`PUT /resource/update/:id`  
 
 **Для удаления книги**  
-`DELETE /books/delete/:id`  
+`DELETE /resource/delete/:id`  
 При успешном удалении вы получите сообщение  
 ```
 successfull delete
