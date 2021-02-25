@@ -19,8 +19,8 @@ function isObject (value) {
 }
 
 const createNew = (req, res) => {
-  const { name, inStock, ingredients, image, address, hasDelivery } = req.body
-  const permisbleKeys = 'name, inStock, ingredients, image, address, hasDelivery'.split(', ')
+  const { name, inStock, ingredients, cost, image, address, hasDelivery } = req.body
+  const permisbleKeys = 'name, inStock, ingredients, cost, image, address, hasDelivery'.split(', ')
 
   const keys = Object.keys(req.body)
   const invalid = keys.filter(k => !permisbleKeys.includes(k))
@@ -30,9 +30,11 @@ const createNew = (req, res) => {
 
   if (!name) return error(res, 400, 'name attribute is required')
   if (!inStock) return error(res, 400, 'inStock attribute is required')
+  if (!cost) return error(res, 400, 'cost attribute is required')
 
   if (typeof name !== 'string') return error(res, 400, 'name attribute should be type `string`')
   if (typeof inStock !== 'number') return error(res, 400, 'inStock attribute should be type `number`')
+  if (typeof cost !== 'number') return error(res, 400, 'cost attribute should be type `number`')
   if (ingredients && !Array.isArray(ingredients)) return error(res, 400, 'ingredients attribute should be type `array`')
   if (image && typeof image !== 'string') return error(res, 400, 'image attribute should be type `string`')
   if (hasDelivery && typeof hasDelivery !== 'boolean') return error(res, 400, 'hasDelivery attribute should be type `boolean`')
@@ -49,6 +51,7 @@ const createNew = (req, res) => {
     id: shortid.generate(),
     name,
     inStock,
+    cost,
     ingredients: ingredients || [],
     image: image || null,
   }
@@ -64,8 +67,8 @@ const createNew = (req, res) => {
 
 const updateItem = (req, res) => {
   const { id } = req.params
-  const { name, inStock, ingredients, image, address, hasDelivery } = req.body
-  const permisbleKeys = 'name, inStock, ingredients, image, address, hasDelivery'.split(', ')
+  const { name, inStock, ingredients, cost, image, address, hasDelivery } = req.body
+  const permisbleKeys = 'name, inStock, ingredients, cost, image, address, hasDelivery'.split(', ')
 
   const item = db.get('pastry').find({ id }).value()
   const item_expanded = db.get('pastry_expanded').find({ id }).value()
@@ -80,6 +83,7 @@ const updateItem = (req, res) => {
 
   if (name && typeof name !== 'string') return error(res, 400, 'name attribute should be type `string`')
   if (inStock && typeof inStock !== 'number') return error(res, 400, 'inStock attribute should be type `number`')
+  if (cost && typeof cost !== 'number') return error(res, 400, 'cost attribute should be type `number`')
   if (ingredients && !Array.isArray(ingredients)) return error(res, 400, 'ingredients attribute should be type `array`')
   if (image && typeof image !== 'string') return error(res, 400, 'image attribute should be type `string`')
   if (hasDelivery && typeof hasDelivery !== 'boolean') return error(res, 400, 'hasDelivery attribute should be type `boolean`')
