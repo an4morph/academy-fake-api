@@ -1,5 +1,6 @@
 const pastry = require('./pastry')
 const books = require('./books')
+const eats = require('./eats')
 
 module.exports = {
   users: [
@@ -20,4 +21,6 @@ module.exports = {
   pastry_expanded: pastry.expanded,
   books: books.main,
   books_expanded: books.expanded,
+  eats_places: eats.places,
+  eats_dishes: eats.dishes,
 }
