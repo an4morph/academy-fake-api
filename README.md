@@ -39,3 +39,44 @@ id объекта сгерерируется на сервере
 ```
 successfull delete
 ```
+## Авторизация и регистрация пользователя
+
+**Для получения данных о пользователе**  
+В заголовке "X-Auth" должен передаваться токен. Если токен не корректен или отсутствует, в ответе придет ошибка 403
+`GET /me`
+в успешном ответе придет объект
+```
+  username: string
+  firstName: string (optional)
+  age: number (optional)
+```
+
+
+**Для регистрации нового пользователя**  
+`PUT /signin`
+в body должен приходить объект вида
+```
+  username: string
+  password: string
+  firstName: string (optional)
+  age: number (optional)
+```
+в ответе придет объект
+```
+  token: string // токен 
+  data: object // вся известная информация о юзере
+```
+
+**Для авторизации**  
+`PUT /login`
+в body должен приходить объект вида
+```
+  username: string
+  password: string
+```
+в ответе придет объект
+```
+  token: string // токен 
+  data: object // вся известная информация о юзере
+```
+
