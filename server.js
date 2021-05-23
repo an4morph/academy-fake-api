@@ -7,6 +7,7 @@ const auth = require('./routes/auth')
 const pastry = require('./routes/pastry')
 const books = require('./routes/books')
 const eats = require('./routes/eats')
+const students = require('./routes/students')
 const db = require('./db')
 
 app.use(cors())
@@ -32,5 +33,7 @@ app.delete('/books/delete/:id', books.deleteItem)
 
 app.get('/eats/places', eats.getPlaces)
 app.get('/eats/dishes/:placeId', eats.getDishes)
+
+app.get('/students/:subject', students.getSubject)
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
