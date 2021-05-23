@@ -53,7 +53,7 @@ successfull delete
 
 
 **Для регистрации нового пользователя**  
-`PUT /signin`
+`POST /signin`
 в body должен приходить объект вида
 ```
   username: string
@@ -68,7 +68,7 @@ successfull delete
 ```
 
 **Для авторизации**  
-`PUT /login`
+`POST /login`
 в body должен приходить объект вида
 ```
   username: string
