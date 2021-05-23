@@ -35,5 +35,6 @@ app.get('/eats/places', eats.getPlaces)
 app.get('/eats/dishes/:placeId', eats.getDishes)
 
 app.get('/students/:subject', students.getSubject)
+app.post('/students/:subject/add', students.addStudent)
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
