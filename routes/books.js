@@ -31,7 +31,7 @@ const createNew = (req, res) => {
   if (typeof author !== 'string') return error(res, 400, 'author attribute should be type `string`')
   if (isFavorite && typeof isFavorite !== 'boolean') return error(res, 400, 'isFavorite attribute should be type `boolean`')
   if (publishYear && typeof publishYear !== 'number') return error(res, 400, 'publishYear attribute should be type `number`')
-  if (publishHouse && typeof publishHouse !== 'boolean') return error(res, 400, 'publishHouse attribute should be type `string`')
+  if (publishHouse && typeof publishHouse !== 'string') return error(res, 400, 'publishHouse attribute should be type `string`')
   if (pagesNumber && typeof pagesNumber !== 'number') return error(res, 400, 'pagesNumber attribute should be type `number`')
   if (genres && !Array.isArray(genres)) return error(res, 400, 'genres attribute should be type `array`')
   if (originalLanguage && typeof originalLanguage !== 'string') return error(res, 400, 'originalLanguage attribute should be type `string`')
